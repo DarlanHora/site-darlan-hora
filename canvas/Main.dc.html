@@ -56,15 +56,41 @@ details[open] .plus{transform:rotate(45deg)}
 @media (max-width:860px){.pipeline{margin-bottom:40px}.pline{width:80px}}
 @media (max-width:768px){.node{width:38px;height:38px}.node-c{width:52px;height:52px}.hero-card{padding:60px 20px;min-height:0}}
 @media (max-width:480px){.hero-card{border-radius:16px}}
+.menu-btn{display:none;width:44px;height:44px;padding:0;border:0;background:transparent;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.menu-btn span{display:block;width:24px;height:2px;border-radius:2px;background:#f0f0f5;transition:transform .25s ease}
+.site-header.open .menu-btn span:first-child{transform:translateY(4px) rotate(45deg)}
+.site-header.open .menu-btn span:last-child{transform:translateY(-4px) rotate(-45deg)}
+@media (max-width:640px){
+.site-header{padding:6px 10px !important;margin-bottom:10px !important}
+.menu-btn{display:flex}
+.site-nav,.site-actions{display:none !important}
+.site-header.open .site-nav{display:flex !important;flex-direction:column;align-items:stretch !important;flex-basis:100%;gap:0 !important;font-size:1rem !important}
+.site-header.open .site-nav a{padding:13px 2px;border-bottom:1px solid rgba(255,255,255,0.08);color:#f0f0f5}
+.site-header.open .site-actions{display:flex !important;flex-basis:100%;flex-direction:column;align-items:stretch !important;padding:8px 0 10px}
+.site-actions a{justify-content:center;min-height:48px !important;font-size:0.95rem !important}
+.hero-actions{flex-direction:column;align-items:stretch;width:100%;max-width:320px}
+.hero-actions a{justify-content:center;min-height:50px !important}
+.sec{padding:56px 20px !important}
+.svc-cta{display:flex;align-items:center;justify-content:center;min-height:46px;margin-top:8px !important;padding:0 16px !important;border:1px solid rgba(255,255,255,0.22);border-radius:999px;color:#f0f0f5}
+.calc-types{grid-template-columns:1fr !important}
+.stepper{width:100%;box-sizing:border-box;justify-content:space-between}
+#calculadora aside{padding:22px !important}
+#calc-total,.calc-total{font-size:50px !important}
+.wa-cta{align-self:stretch !important;justify-content:center}
+.contact-form{padding:20px !important}
+.foot-grid{grid-template-columns:1fr 1fr !important;gap:32px 20px !important}
+.foot-grid > :first-child,.foot-grid > :last-child{grid-column:1 / -1}
+}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.colon,.beam,.splash,.node::before{animation:none}.btn,.card,.plus{transition:none}}
 </style>
 </helmet>
 <div style="width: 100%; overflow-x: hidden; background: #0a0a0f">
 
 <div style="max-width: 1600px; margin: 0 auto; padding: 14px; box-sizing: border-box">
-<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; padding: 12px 24px; margin-bottom: 14px">
+<header class="site-header {{menuCls}}" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; padding: 12px 24px; margin-bottom: 14px">
 <a href="#inicio" aria-label="Darlan Hora, início" style="font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; color: #f0f0f5; text-decoration: none">darlan<span class="colon" style="color: #7C9BFF">:</span>hora</a>
-<nav aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px; font-size: 0.85rem">
+<button type="button" class="menu-btn" aria-label="Abrir ou fechar o menu" aria-expanded="{{menuOpen}}" onClick="{{toggleMenu}}"><span></span><span></span></button>
+<nav aria-label="Principal" class="site-nav" onClick="{{closeMenu}}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px; font-size: 0.85rem">
 <a class="navlink" href="#servicos">Serviços</a>
 <a class="navlink" href="#sobre">Sobre</a>
 <a class="navlink" href="#portfolio">Portfólio</a>
@@ -72,7 +98,7 @@ details[open] .plus{transform:rotate(45deg)}
 <a class="navlink" href="#calculadora">Calculadora</a>
 <a class="navlink" href="#faq">Dúvidas</a>
 </nav>
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<div class="site-actions" onClick="{{closeMenu}}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
 <a class="btn btn-ghost" href="https://wa.me/5571996242980" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: #f0f0f5; text-decoration: none; font-size: 0.82rem; font-weight: 500">WhatsApp</a>
 <a class="btn btn-blue" href="#calculadora" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #ffffff; color: #0a0a0f; text-decoration: none; font-size: 0.82rem; font-weight: 600">Solicitar orçamento</a>
 </div>
@@ -93,9 +119,9 @@ details[open] .plus{transform:rotate(45deg)}
 <div style="position: relative; z-index: 1; max-width: 680px; display: flex; flex-direction: column; align-items: center">
 <h1 style="margin: 0 0 20px; font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance">Seu negócio merece <strong class="hero-strong">uma presença digital à altura.</strong></h1>
 <p style="margin: 0 auto 36px; max-width: 480px; font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.62)">Crio experiências digitais modernas e personalizadas para empresas, empreendedores e profissionais que desejam se destacar na internet.</p>
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px">
+<div class="hero-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px">
 <a class="btn btn-blue" href="#calculadora" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 32px; border-radius: 999px; background: #ffffff; color: #0a0a0f; text-decoration: none; font-weight: 600; font-size: 0.95rem">Solicitar orçamento</a>
-<a class="btn btn-ghost" href="#servicos" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 28px; border-radius: 999px; background: rgba(10,10,15,0.55); border: 1px solid rgba(255,255,255,0.22); color: #ffffff; text-decoration: none; font-weight: 500; font-size: 0.95rem">Conhecer serviços</a>
+<a class="btn btn-ghost" href="#servicos" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 28px; border-radius: 999px; background: rgba(10,10,15,0.9); border: 1px solid rgba(255,255,255,0.22); color: #ffffff; text-decoration: none; font-weight: 500; font-size: 0.95rem">Conhecer serviços</a>
 </div>
 </div>
 </section>
@@ -104,7 +130,7 @@ details[open] .plus{transform:rotate(45deg)}
 </div>
 
 <section id="servicos" style="background: #111118; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1)">
-<div style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 44px">
+<div class="sec" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 44px">
 <div style="display: flex; flex-direction: column; gap: 14px; max-width: 720px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #7C9BFF">serviços</p>
 <h2 style="margin: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance">Quatro tipos de site, cada um com um trabalho a fazer.</h2>
@@ -120,7 +146,7 @@ details[open] .plus{transform:rotate(45deg)}
 <li>Botões de contato e WhatsApp em destaque</li>
 <li>Carregamento rápido no celular</li>
 </ul>
-<a href="#calculadora" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
+<a href="#calculadora" onClick="{{pick.landing}}" class="svc-cta" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
 </article>
 
 <article class="card" style="display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 16px; background: #0a0a0f">
@@ -132,7 +158,7 @@ details[open] .plus{transform:rotate(45deg)}
 <li>Visual alinhado à identidade da empresa</li>
 <li>Estrutura preparada para aparecer no Google</li>
 </ul>
-<a href="#calculadora" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
+<a href="#calculadora" onClick="{{pick.inst}}" class="svc-cta" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
 </article>
 
 <article class="card" style="display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 16px; background: #0a0a0f">
@@ -144,7 +170,7 @@ details[open] .plus{transform:rotate(45deg)}
 <li>Contato a um toque, direto no WhatsApp</li>
 <li>Passa confiança logo no primeiro acesso</li>
 </ul>
-<a href="#calculadora" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
+<a href="#calculadora" onClick="{{pick.auto}}" class="svc-cta" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
 </article>
 
 <article class="card" style="display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 16px; background: #0a0a0f">
@@ -156,14 +182,14 @@ details[open] .plus{transform:rotate(45deg)}
 <li>Layout feito para o seu estilo</li>
 <li>Fácil de enviar para clientes e recrutadores</li>
 </ul>
-<a href="#calculadora" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
+<a href="#calculadora" onClick="{{pick.port}}" class="svc-cta" style="margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; text-decoration: none">Solicitar orçamento →</a>
 </article>
 
 </div>
 </div>
 </section>
 
-<section id="sobre" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 56px; align-items: center">
+<section id="sobre" class="sec" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 56px; align-items: center">
 <img src="/_blob/5faeae2766f9b540a7ddc343f81bf452" alt="Darlan Hora sorrindo, de camisa polo azul-marinho" style="display: block; aspect-ratio: 4 / 5; max-width: 420px; width: 100%; object-fit: cover; object-position: center top; border-radius: 16px; box-shadow: 12px 12px 0 #1F4FFF">
 <div style="display: flex; flex-direction: column; gap: 22px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #7C9BFF">sobre</p>
@@ -180,7 +206,7 @@ details[open] .plus{transform:rotate(45deg)}
 </section>
 
 <section id="portfolio" style="background: #111118; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1)">
-<div style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 44px">
+<div class="sec" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 44px">
 <div style="display: flex; flex-direction: column; gap: 14px; max-width: 760px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #7C9BFF">portfólio</p>
 <h2 style="margin: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance">Cinco estudos, cinco visuais diferentes.</h2>
@@ -250,7 +276,7 @@ details[open] .plus{transform:rotate(45deg)}
 </div>
 </section>
 
-<section id="precos" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
+<section id="precos" class="sec" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
 <div style="display: flex; flex-direction: column; gap: 14px; max-width: 720px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #7C9BFF">preços</p>
 <h2 style="margin: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance">Valores iniciais para você se planejar.</h2>
@@ -295,7 +321,7 @@ details[open] .plus{transform:rotate(45deg)}
 </section>
 
 <section id="calculadora" style="background: #0A1330; color: #fff">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
+<div class="sec" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
 <div style="display: flex; flex-direction: column; gap: 14px; max-width: 720px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #9FB4FF">calculadora de orçamento</p>
 <h2 style="margin: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance">Monte o seu site e veja uma estimativa na hora.</h2>
@@ -306,9 +332,9 @@ details[open] .plus{transform:rotate(45deg)}
 
 <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 14px">
 <legend style="padding: 0; margin-bottom: 14px; font-weight: 600; font-size: 17px">Qual tipo de site você quer criar?</legend>
-<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<div class="calc-types" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 10px">
 <sc-for list="{{types}}" as="t" hint-placeholder-count="5">
-<button type="button" class="opt" aria-pressed="{{t.on}}" onClick="{{t.pick}}" style="min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1.5px solid {{t.bd}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 15px; font-weight: 500">{{t.label}}</button>
+<button type="button" class="opt" aria-pressed="{{t.on}}" onClick="{{t.pick}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 16px; text-align: left; border-radius: 12px; border: 1.5px solid {{t.bd}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 15px; font-weight: 600"><span>{{t.label}}</span><span style="font-size: 13px; font-weight: 400; line-height: 1.4; opacity: 0.85">{{t.desc}}</span></button>
 </sc-for>
 </div>
 </fieldset>
@@ -318,7 +344,7 @@ details[open] .plus{transform:rotate(45deg)}
 <span id="pg-label" style="font-weight: 600; font-size: 17px">Quantas páginas?</span>
 <span style="font-size: 14px; color: #A9B6DE">{{pagesNote}}</span>
 </div>
-<div role="group" aria-labelledby="pg-label" style="display: flex; align-items: center; gap: 6px; padding: 6px; border: 1.5px solid rgba(255,255,255,0.22); border-radius: 999px">
+<div role="group" aria-labelledby="pg-label" class="stepper" style="display: flex; align-items: center; gap: 6px; padding: 6px; border: 1.5px solid rgba(255,255,255,0.22); border-radius: 999px">
 <button type="button" class="opt" aria-label="Menos uma página" onClick="{{lessPages}}" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.1); color: #fff; font-size: 22px; line-height: 1">−</button>
 <span aria-live="polite" style="min-width: 48px; text-align: center; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 20px; font-variant-numeric: tabular-nums">{{pages}}</span>
 <button type="button" class="opt" aria-label="Mais uma página" onClick="{{morePages}}" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.1); color: #fff; font-size: 22px; line-height: 1">+</button>
@@ -350,7 +376,7 @@ details[open] .plus{transform:rotate(45deg)}
 <li style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #9A9AB8">{{l.label}}</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; white-space: nowrap">{{l.value}}</span></li>
 </sc-for>
 </ul>
-<a class="btn btn-blue" href="#contato" style="display: flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 20px; border-radius: 999px; background: #ffffff; color: #0a0a0f; text-decoration: none; font-weight: 600; font-size: 16px; text-align: center">Continuar com esta estimativa</a>
+<a class="btn btn-blue" href="#contato" onClick="{{keepEstimate}}" style="display: flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 20px; border-radius: 999px; background: #ffffff; color: #0a0a0f; text-decoration: none; font-weight: 600; font-size: 16px; text-align: center">Continuar com esta estimativa</a>
 <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #9A9AB8">Este valor é uma estimativa e não uma proposta comercial. O orçamento definitivo é combinado depois de conversarmos sobre o projeto. Domínio e hospedagem não estão incluídos.</p>
 </aside>
 
@@ -358,7 +384,7 @@ details[open] .plus{transform:rotate(45deg)}
 </div>
 </section>
 
-<section id="como-funciona" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
+<section id="como-funciona" class="sec" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
 <div style="display: flex; flex-direction: column; gap: 14px; max-width: 720px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #7C9BFF">como funciona</p>
 <h2 style="margin: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance">Da primeira conversa ao site no ar, em cinco passos.</h2>
@@ -387,13 +413,13 @@ details[open] .plus{transform:rotate(45deg)}
 <li style="display: flex; flex-direction: column; gap: 12px; padding: 24px 20px 24px 0; border-top: 2px solid #1F4FFF">
 <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; color: #7C9BFF">05</span>
 <span style="font-weight: 600; font-size: 18px">Entrega após aprovação</span>
-<span style="font-size: 14.500px; line-height: 1.5; color: #9A9AB8">Em até 15 dias, e só depois que você aprovar.</span>
+<span style="font-size: 14.500px; line-height: 1.5; color: #9A9AB8">No prazo combinado, e só depois que você aprovar.</span>
 </li>
 </ol>
 </section>
 
 <section id="faq" style="background: #111118; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1)">
-<div style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 44px">
+<div class="sec" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 44px">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #7C9BFF">perguntas frequentes</p>
 <h2 style="margin: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance">Dúvidas comuns antes de contratar.</h2>
@@ -405,7 +431,7 @@ details[open] .plus{transform:rotate(45deg)}
 </details>
 <details style="border-top: 1.5px solid rgba(255,255,255,0.1); padding: 4px 0">
 <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; font-weight: 600; font-size: 17px">Quanto tempo demora para desenvolver?<span class="plus" aria-hidden="true" style="font-size: 24px; font-weight: 400; color: #7C9BFF">+</span></summary>
-<p style="margin: 0; padding: 0 0 18px; max-width: 62ch; font-size: 15.5px; line-height: 1.6; color: #9A9AB8">O prazo de entrega é de 15 dias. Projetos maiores podem pedir mais tempo, e isso é combinado no orçamento, antes de começar.</p>
+<p style="margin: 0; padding: 0 0 18px; max-width: 62ch; font-size: 15.5px; line-height: 1.6; color: #9A9AB8">Landing pages, sites para autônomos e portfólios ficam prontos em até 15 dias. Sites institucionais e personalizados levam de 20 a 30 dias. O prazo começa a contar quando eu recebo o conteúdo (textos, fotos e logo) e é confirmado no orçamento, antes de começar.</p>
 </details>
 <details style="border-top: 1.5px solid rgba(255,255,255,0.1); padding: 4px 0">
 <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; font-weight: 600; font-size: 17px">O site funciona em celulares?<span class="plus" aria-hidden="true" style="font-size: 24px; font-weight: 400; color: #7C9BFF">+</span></summary>
@@ -431,17 +457,17 @@ details[open] .plus{transform:rotate(45deg)}
 </div>
 </section>
 
-<section id="contato" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 56px">
+<section id="contato" class="sec" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 56px">
 <div style="display: flex; flex-direction: column; gap: 22px">
 <p style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #7C9BFF">contato</p>
 <h2 style="margin: 0; font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -0.03em; text-wrap: balance">Vamos colocar seu site no ar?</h2>
 <p style="margin: 0; max-width: 46ch; font-size: 17px; line-height: 1.6; color: #9A9AB8">Conte o que você precisa pelo formulário ou chame direto no WhatsApp. Respondo com os próximos passos e um orçamento para o seu projeto.</p>
-<a class="btn btn-ghost" href="https://wa.me/5571996242980" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 26px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.25); color: #f0f0f5; text-decoration: none; font-weight: 600; font-size: 17px">
+<a class="btn btn-ghost wa-cta" href="https://wa.me/5571996242980" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 26px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.25); color: #f0f0f5; text-decoration: none; font-weight: 600; font-size: 17px">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.500a8.500 8.500 0 0 1-12.600 7.400L3 20.500l1.700-5.200A8.500 8.500 0 1 1 21 11.500z"></path></svg>
 WhatsApp (71) 99624-2980</a>
 </div>
 
-<form onSubmit="{{noSubmit}}" style="display: flex; flex-direction: column; gap: 18px; padding: 32px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 18px; background: #111118">
+<form onSubmit="{{noSubmit}}" class="contact-form" style="display: flex; flex-direction: column; gap: 18px; padding: 32px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 18px; background: #111118">
 <div style="display: flex; flex-direction: column; gap: 8px">
 <label for="c-nome" style="font-weight: 600; font-size: 15px">Nome</label>
 <input id="c-nome" type="text" autocomplete="name" value="{{cName}}" onChange="{{setCName}}" style="min-height: 48px; padding: 0 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.18); background: #111118; color: #f0f0f5; font: inherit; font-size: 15px">
@@ -450,6 +476,7 @@ WhatsApp (71) 99624-2980</a>
 <div style="display: flex; flex-direction: column; gap: 8px">
 <label for="c-email" style="font-weight: 600; font-size: 15px">E-mail</label>
 <input id="c-email" type="email" autocomplete="email" value="{{cEmail}}" onChange="{{setCEmail}}" style="min-height: 48px; padding: 0 14px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.18); background: #111118; color: #f0f0f5; font: inherit; font-size: 15px">
+<sc-if value="{{emailErr}}" hint-placeholder-val="{{false}}"><span id="c-email-erro" role="alert" style="font-size: 13px; line-height: 1.4; color: #FF9A9A">Digite um e-mail válido, como nome@exemplo.com.</span></sc-if>
 </div>
 <div style="display: flex; flex-direction: column; gap: 8px">
 <label for="c-tel" style="font-weight: 600; font-size: 15px">Telefone</label>
@@ -477,13 +504,15 @@ WhatsApp (71) 99624-2980</a>
 <span style="color: #C7D0EA">{{calcSummary}}</span>
 </div>
 </sc-if>
-<a class="btn btn-blue" href="{{contactLink}}" style="display: flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 20px; border-radius: 999px; background: #ffffff; color: #0a0a0f; text-decoration: none; font-weight: 600; font-size: 16px">Enviar pelo WhatsApp</a>
+<label class="consent" style="display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: #9A9AB8; cursor: pointer"><input type="checkbox" id="c-consent" style="margin: 2px 0 0; width: 18px; height: 18px; accent-color: #1F4FFF; flex-shrink: 0"><span>Li o <a href="Privacidade.dc.html" target="_blank" rel="noopener">aviso de privacidade</a> (abre em outra aba) e concordo que meus dados sejam usados só para responder ao meu pedido.</span></label>
+<span id="c-consent-erro" role="alert" hidden style="font-size: 13px; line-height: 1.4; color: #FF9A9A">Marque a caixa acima para enviar o pedido.</span>
+<a class="btn btn-blue" href="{{contactLink}}" onClick="{{checkEmail}}" style="display: flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 20px; border-radius: 999px; background: #ffffff; color: #0a0a0f; text-decoration: none; font-weight: 600; font-size: 16px">Enviar pelo WhatsApp</a>
 </form>
 </section>
 
 <footer style="background: #07070b; color: #C7D0EA">
 <div style="max-width: 1200px; margin: 0 auto; padding: 64px 24px 32px; display: flex; flex-direction: column; gap: 44px">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 36px">
+<div class="foot-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 36px">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; align-items: center; gap: 12px">
 <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 10px; background: #1F4FFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px"><span style="width: 7px; height: 7px; border-radius: 2px; background: #fff"></span><span style="width: 7px; height: 7px; border-radius: 2px; background: #fff"></span></span>
@@ -509,10 +538,10 @@ WhatsApp (71) 99624-2980</a>
 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14.5px">
 <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #9FB4FF">contato</span>
 <a class="footlink" href="https://wa.me/5571996242980">WhatsApp (71) 99624-2980</a>
-<span>Instagram [EM BREVE]</span>
+<a class="footlink" href="https://www.instagram.com/sites.darlanhora/" target="_blank" rel="noopener">Instagram @sites.darlanhora</a>
 </div>
 </div>
-<p style="margin: 0; padding-top: 24px; border-top: 1px solid #263055; font-size: 13px">© 2026 Darlan Hora. Todos os direitos reservados.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 24px; border-top: 1px solid #263055; font-size: 13px"><span>© 2026 Darlan Hora. Todos os direitos reservados.</span><a class="footlink" href="Privacidade.dc.html">Aviso de privacidade</a></div>
 </div>
 </footer>
 
@@ -523,7 +552,7 @@ class Component extends DCLogic {
 state = {
 type: 'inst', pages: 5,
 form: true, whats: true, gal: false, anim: false, func: false, maint: false,
-touched: false,
+touched: false, menu: false, emailErr: false,
 cName: '', cEmail: '', cTel: '', cService: 'Landing page', cDesc: ''
 };
 renderVals() {
@@ -534,11 +563,11 @@ var EXTRA_PAGE = 80;
 var MAINT = 100;
 var SVC = { landing: 'Landing page', inst: 'Site institucional', auto: 'Site para profissional autônomo', port: 'Portfólio profissional', custom: 'Site personalizado' };
 var TYPES = [
-{ id: 'landing', label: 'Landing page', base: 500, inc: 1 },
-{ id: 'inst', label: 'Site institucional', base: 900, inc: 5 },
-{ id: 'auto', label: 'Site para autônomo', base: 800, inc: 4 },
-{ id: 'port', label: 'Portfólio profissional', base: 700, inc: 4 },
-{ id: 'custom', label: 'Site personalizado', base: 1500, inc: 6 }
+{ id: 'landing', label: 'Landing page', base: 500, inc: 1, desc: 'Uma página só, para divulgar um produto, serviço ou campanha.' },
+{ id: 'inst', label: 'Site institucional', base: 900, inc: 5, desc: 'Várias páginas para apresentar a empresa: história, serviços e contato.' },
+{ id: 'auto', label: 'Site para autônomo', base: 800, inc: 4, desc: 'Para quem trabalha por conta própria mostrar o que faz e receber contatos.' },
+{ id: 'port', label: 'Portfólio profissional', base: 700, inc: 4, desc: 'Uma vitrine dos seus projetos e trabalhos realizados.' },
+{ id: 'custom', label: 'Site personalizado', base: 1500, inc: 6, desc: 'Projeto sob medida, com mais páginas ou funções próprias.' }
 ];
 var EXTRAS = [
 { id: 'form', label: 'Formulário de contato', price: 60 },
@@ -564,7 +593,7 @@ if (s[x.id]) { total += x.price; chosen.push(x.label); lines.push({ label: x.lab
 });
 var types = TYPES.map(function (t) {
 var on = t.id === s.type; var k = look(on);
-return { label: t.label, on: on, bg: k.bg, fg: k.fg, bd: k.bd, pick: function () { self.setState({ type: t.id, pages: t.inc, touched: true, cService: SVC[t.id] }); } };
+return { label: t.label, desc: t.desc, on: on, bg: k.bg, fg: k.fg, bd: k.bd, pick: function () { self.setState({ type: t.id, pages: t.inc, touched: true, cService: SVC[t.id] }); } };
 });
 var extras = EXTRAS.map(function (x) {
 var on = !!s[x.id]; var k = look(on);
@@ -572,6 +601,8 @@ return { label: x.label, tag: '+ ' + money(x.price), on: on, bg: k.bg, fg: k.fg,
 });
 var mk = look(s.maint);
 extras.push({ label: 'Manutenção mensal', tag: money(MAINT) + '/mês', on: s.maint, bg: mk.bg, fg: mk.fg, bd: mk.bd, toggle: function () { self.setState({ maint: !s.maint, touched: true, cService: SVC[s.type] }); } });
+var pick = {};
+TYPES.forEach(function (t) { pick[t.id] = function () { self.setState({ type: t.id, pages: t.inc, cService: SVC[t.id] }); }; });
 var field = function (key) { return function (e) { var p = {}; p[key] = e.target.value; self.setState(p); }; };
 var estimate = money(total) + (s.maint ? ' + manutenção a partir de ' + money(MAINT) + '/mês' : '');
 var calcSummary = cur.label + ', ' + s.pages + (s.pages > 1 ? ' páginas' : ' página') + (chosen.length ? ', ' + chosen.join(', ') : '') + (s.maint ? ', Manutenção mensal' : '') + '. Estimativa: ' + estimate + '.';
@@ -595,7 +626,7 @@ if (s.touched) contactMsg = contactMsg.concat([
 ]);
 contactMsg = contactMsg.join('\n');
 return {
-types: types, extras: extras, lines: lines,
+types: types, extras: extras, lines: lines, pick: pick, emailErr: s.emailErr, checkEmail: function (e) { var v = s.cEmail.trim(); if (v && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { e.preventDefault(); self.setState({ emailErr: true }); } }, menuCls: s.menu ? 'open' : '', menuOpen: s.menu, toggleMenu: function () { self.setState({ menu: !s.menu }); }, closeMenu: function () { if (s.menu) self.setState({ menu: false }); }, keepEstimate: function () { self.setState({ touched: true, cService: SVC[s.type] }); },
 pages: s.pages,
 pagesNote: cur.inc > 1 ? 'Até ' + cur.inc + ' páginas incluídas. Cada página extra: ' + money(EXTRA_PAGE) + '.' : '1 página incluída. Cada página extra: ' + money(EXTRA_PAGE) + '.',
 lessPages: function () { self.setState({ pages: Math.max(1, s.pages - 1), touched: true, cService: SVC[s.type] }); },
@@ -603,7 +634,7 @@ morePages: function () { self.setState({ pages: Math.min(30, s.pages + 1), touch
 total: money(total), hasMaint: s.maint, maintPrice: money(MAINT),
 touched: s.touched, calcSummary: calcSummary,
 cName: s.cName, cEmail: s.cEmail, cTel: s.cTel, cService: s.cService, cDesc: s.cDesc,
-setCName: field('cName'), setCEmail: field('cEmail'), setCTel: field('cTel'), setCService: field('cService'), setCDesc: field('cDesc'),
+setCName: field('cName'), setCEmail: function (e) { self.setState({ cEmail: e.target.value, emailErr: false }); }, setCTel: field('cTel'), setCService: field('cService'), setCDesc: field('cDesc'),
 noSubmit: function (e) { e.preventDefault(); },
 contactLink: WA + encodeURIComponent(contactMsg)
 };
